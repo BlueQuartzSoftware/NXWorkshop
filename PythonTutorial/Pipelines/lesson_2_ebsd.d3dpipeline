@@ -1,0 +1,155 @@
+{
+  "isDisabled": false,
+  "name": "Untitled Pipeline",
+  "pipeline": [
+    {
+      "args": {
+        "cell_attribute_matrix_name": "Cell Data",
+        "cell_ensemble_attribute_matrix_name": "CellEnsembleData",
+        "data_container_name": "DataContainer",
+        "input_file": "Data/Small_IN100/Slice_1.ang"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ReadAngDataFilter",
+        "uuid": "5b062816-79ac-47ce-93cb-e7966896bcbd"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "euler_angles_array_path": "DataContainer/Cell Data/EulerAngles",
+        "rotation_axis": [
+          0.0,
+          0.0,
+          1.0,
+          90.0
+        ]
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::RotateEulerRefFrameFilter",
+        "uuid": "0458edcd-3655-4465-adc8-b036d76138b5"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "created_image_geometry": "DataContainer",
+        "remove_original_geometry": true,
+        "rotate_slice_by_slice": false,
+        "rotation_axis": [
+          0.0,
+          1.0,
+          0.0,
+          180.0
+        ],
+        "rotation_matrix": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "rotation_representation_index": 0,
+        "selected_image_geometry": "DataContainer"
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::RotateSampleRefFrameFilter",
+        "uuid": "d2451dc1-a5a1-4ac2-a64d-7991669dcffc"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "array_thresholds": {
+          "inverted": false,
+          "thresholds": [
+            {
+              "array_path": "DataContainer/Cell Data/Confidence Index",
+              "comparison": 0,
+              "inverted": false,
+              "type": "array",
+              "union": 0,
+              "value": 0.1
+            }
+          ],
+          "type": "collection",
+          "union": 0
+        },
+        "created_data_path": "Mask",
+        "created_mask_type": 10,
+        "custom_false_value": 0.0,
+        "custom_true_value": 1.0,
+        "use_custom_false_value": false,
+        "use_custom_true_value": false
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::MultiThresholdObjects",
+        "uuid": "4246245e-1011-4add-8436-0af6bed19228"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "cell_euler_angles_array_path": "DataContainer/Cell Data/EulerAngles",
+        "cell_ipf_colors_array_name": "IPFColors",
+        "cell_phases_array_path": "DataContainer/Cell Data/Phases",
+        "crystal_structures_array_path": "DataContainer/CellEnsembleData/CrystalStructures",
+        "mask_array_path": "DataContainer/Cell Data/Mask",
+        "reference_dir": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "use_mask": true
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::GenerateIPFColorsFilter",
+        "uuid": "64cb4f27-6e5e-4dd2-8a03-0c448cb8f5e6"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "file_name": "Data/Output/Edax_IPF_Colors/Small_IN100_Slice_1.png",
+        "image_array_path": "DataContainer/Cell Data/IPFColors",
+        "image_geom_path": "DataContainer",
+        "index_offset": 0,
+        "plane_index": 0
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::ITKImageWriter",
+        "uuid": "a181ee3e-1678-4133-b9c5-a9dd7bfec62f"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": "Output/Slice_1.dream3d",
+        "write_xdmf_file": false
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::WriteDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": false
+    }
+  ],
+  "version": 1
+}
