@@ -2,21 +2,21 @@ import simplnx as nx
 import itkimageprocessing as nxitk
 import orientationanalysis as nxor
 from pathlib import Path
-from . import nxutility
-
-#
-# Tutorial Output Directory
-#
-output_dir = Path('/tmp/Tutorial_2c_Output')   # Modify this path to point to the directory where the Tutorial 2c output will be stored!
-output_dir.mkdir(exist_ok=True)
+import nxutility
 
 #
 # Tutorial Start
 #
 
+#
+# Tutorial Output Directory
+#
+output_dir = Path(__file__).parent / 'Output' / 'Tutorial_2c_Output'
+output_dir.mkdir(exist_ok=True, parents=True)
+
 # Loop over the EBSD pipeline
 edax_ipf_colors_output_dir = output_dir / 'Edax_IPF_Colors'
-edax_ipf_colors_output_dir.mkdir(exist_ok=True)
+edax_ipf_colors_output_dir.mkdir(exist_ok=True, parents=True)
 for i in range(1, 6):
     # Create the data structure
     data_structure = nx.DataStructure()

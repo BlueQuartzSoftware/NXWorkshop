@@ -2,17 +2,17 @@ import simplnx as nx
 import itkimageprocessing as nxitk
 import orientationanalysis as nxor
 from pathlib import Path
-from . import nxutility
-
-#
-# Tutorial Output Directory
-#
-output_dir = Path('/tmp/Tutorial_2b_Output')   # Modify this path to point to the directory where the Tutorial 2b output will be stored!
-output_dir.mkdir(exist_ok=True)
+import nxutility
 
 #
 # Tutorial Start
 #
+
+#
+# Tutorial Output Directory
+#
+output_dir = Path(__file__).parent / 'Output' / 'Tutorial_2b_Output'
+output_dir.mkdir(exist_ok=True, parents=True)
 
 # Create the data structure
 data_structure = nx.DataStructure()
