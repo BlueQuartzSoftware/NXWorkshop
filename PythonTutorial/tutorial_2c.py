@@ -4,9 +4,9 @@ import orientationanalysis as nxor
 from pathlib import Path
 import nxutility
 
-#
-# Tutorial Start
-#
+# #############################################################################
+# Script Starts Here
+# #############################################################################
 
 #
 # Tutorial Output Directory
