@@ -31,7 +31,7 @@ create_data_group_args = {
     }
 
 # Insert CreateDataGroup filter into the pipeline
-pipeline.insert(2, nx.CreateDataGroup(), create_data_group_args)
+pipeline.insert(2, nx.CreateDataGroupFilter(), create_data_group_args)
 
 # Print the pipeline again
 for index, filter in enumerate(pipeline):

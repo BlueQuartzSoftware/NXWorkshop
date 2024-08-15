@@ -15,25 +15,25 @@ output_dir.mkdir(exist_ok=True, parents=True)
 # Create the DataStructure instance
 data_structure = nx.DataStructure()
 
-result = nx.CreateDataGroup.execute(data_structure=data_structure, 
+result = nx.CreateDataGroupFilter.execute(data_structure=data_structure, 
                                     data_object_path=nx.DataPath("Top Level Group"))
-nxutility.check_filter_result(nx.CreateDataGroup(), result)
+nxutility.check_filter_result(nx.CreateDataGroupFilter(), result)
 
 # Loop to create a bunch of DataGroups.
 for i in range(1, 6):
     current_data_group_path = nx.DataPath(f"Top Level Group {i}")
-    result = nx.CreateDataGroup.execute(data_structure=data_structure, 
+    result = nx.CreateDataGroupFilter.execute(data_structure=data_structure, 
                                         data_object_path=current_data_group_path)
-    nxutility.check_filter_result(nx.CreateDataGroup(), result)
+    nxutility.check_filter_result(nx.CreateDataGroupFilter(), result)
 
 # Execute the CreateDataArray filter
-result = nx.CreateDataArray().execute(data_structure=data_structure, 
+result = nx.CreateDataArrayFilter().execute(data_structure=data_structure, 
                                     component_count=1, 
-                                    initialization_value="0", 
-                                    numeric_type=nx.NumericType.float32, 
-                                    output_data_array=nx.DataPath("Top Level Group/2D Array"), 
+                                    initialization_value_str="0", 
+                                    numeric_type_index=nx.NumericType.float32, 
+                                    output_array_path=nx.DataPath("Top Level Group/2D Array"), 
                                     tuple_dimensions=[[4,5]])
-nxutility.check_filter_result(nx.CreateDataArray(), result)
+nxutility.check_filter_result(nx.CreateDataArrayFilter(), result)
 print(f'{data_structure.hierarchy_to_str()}')
 
 # Try to get the array from the DataStructure
