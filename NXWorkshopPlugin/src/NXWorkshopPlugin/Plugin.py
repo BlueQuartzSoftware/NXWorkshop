@@ -9,36 +9,25 @@ This section conditionally tries to import each filter
 """
 
 # FILTER_START: Exercise1
-try:
-  from NXWorkshopPlugin.Exercise1 import Exercise1
-  _filters.append(Exercise1)
-except ImportError:
-  pass
+from .Exercise1 import Exercise1
+_filters.append(Exercise1)
 # FILTER_END: Exercise1
 
 # FILTER_START: Exercise2
-try:
-  from NXWorkshopPlugin.Exercise2 import Exercise2
-  _filters.append(Exercise2)
-except ImportError:
-  pass
+from .Exercise2 import Exercise2
+_filters.append(Exercise2)
 # FILTER_END: Exercise2
 
 # FILTER_START: Exercise3
-try:
-  from NXWorkshopPlugin.Exercise3 import Exercise3
-  _filters.append(Exercise3)
-except ImportError:
-  pass
+from .Exercise3 import Exercise3
+_filters.append(Exercise3)
 # FILTER_END: Exercise3
 
 # FILTER_START: Exercise4
-try:
-  from NXWorkshopPlugin.Exercise4 import Exercise4
-  _filters.append(Exercise4)
-except ImportError:
-  pass
+from .Exercise4 import Exercise4
+_filters.append(Exercise4)
 # FILTER_END: Exercise4
+
 
 
 import simplnx as nx
@@ -55,7 +44,7 @@ class NXWorkshopPlugin:
     :return: The Plugins's Uuid value
     :rtype: string
     """
-    return nx.Uuid('43c68d9a-3205-479c-a280-648617837580')
+    return nx.Uuid('eecde429-e9f8-41cf-9fd1-9623a7b22de7')
 
   def name(self) -> str:
     """The returns the name of plugin. DO NOT Change this
