@@ -10,4 +10,6 @@ dependencies:
   - scipy
   - imageio
   - dream3dnx
+  - opencv
+  - pygraphviz
   

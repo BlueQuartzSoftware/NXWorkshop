@@ -1,0 +1,498 @@
+{
+  "isDisabled": false,
+  "name": "example_datastructure.d3dpipeline",
+  "pinnedParams": [],
+  "pipeline": [
+    {
+      "args": {
+        "component_dimensions": {
+          "value": [
+            [
+              3.0
+            ]
+          ],
+          "version": 1
+        },
+        "data_format": {
+          "value": "",
+          "version": 1
+        },
+        "init_end_range": {
+          "value": "1;1;1",
+          "version": 1
+        },
+        "init_start_range": {
+          "value": "0;0;0",
+          "version": 1
+        },
+        "init_type_index": {
+          "value": 1,
+          "version": 1
+        },
+        "init_value": {
+          "value": "1;1;1",
+          "version": 1
+        },
+        "numeric_type_index": {
+          "value": 8,
+          "version": 1
+        },
+        "output_array_path": {
+          "value": "Top_Level_Data",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "seed_array_name": {
+          "value": "InitializeDataFilter SeedValue",
+          "version": 1
+        },
+        "seed_value": {
+          "value": 5489,
+          "version": 1
+        },
+        "set_tuple_dimensions": {
+          "value": true,
+          "version": 1
+        },
+        "standardize_seed": {
+          "value": false,
+          "version": 1
+        },
+        "starting_fill_value": {
+          "value": "0",
+          "version": 1
+        },
+        "step_operation_index": {
+          "value": 0,
+          "version": 1
+        },
+        "step_value": {
+          "value": "1",
+          "version": 1
+        },
+        "tuple_dimensions": {
+          "value": [
+            [
+              10.0
+            ]
+          ],
+          "version": 1
+        },
+        "use_seed": {
+          "value": false,
+          "version": 1
+        }
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::CreateDataArrayAdvancedFilter",
+        "uuid": "f23464df-abcc-40cf-bf99-f71463df633c"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "data_object_path": {
+          "value": "Data_Group",
+          "version": 1
+        },
+        "parameters_version": 1
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::CreateDataGroupFilter",
+        "uuid": "e7d2f9b8-4131-4b28-a843-ea3c6950f101"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "component_dimensions": {
+          "value": [
+            [
+              1.0
+            ]
+          ],
+          "version": 1
+        },
+        "data_format": {
+          "value": "",
+          "version": 1
+        },
+        "init_end_range": {
+          "value": "1;1;1",
+          "version": 1
+        },
+        "init_start_range": {
+          "value": "0;0;0",
+          "version": 1
+        },
+        "init_type_index": {
+          "value": 1,
+          "version": 1
+        },
+        "init_value": {
+          "value": "1;1;1",
+          "version": 1
+        },
+        "numeric_type_index": {
+          "value": 3,
+          "version": 1
+        },
+        "output_array_path": {
+          "value": "Data_Group/uint16_data",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "seed_array_name": {
+          "value": "InitializeDataFilter SeedValue",
+          "version": 1
+        },
+        "seed_value": {
+          "value": 5489,
+          "version": 1
+        },
+        "set_tuple_dimensions": {
+          "value": true,
+          "version": 1
+        },
+        "standardize_seed": {
+          "value": false,
+          "version": 1
+        },
+        "starting_fill_value": {
+          "value": "0",
+          "version": 1
+        },
+        "step_operation_index": {
+          "value": 0,
+          "version": 1
+        },
+        "step_value": {
+          "value": "1",
+          "version": 1
+        },
+        "tuple_dimensions": {
+          "value": [
+            [
+              10.0
+            ]
+          ],
+          "version": 1
+        },
+        "use_seed": {
+          "value": false,
+          "version": 1
+        }
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::CreateDataArrayAdvancedFilter",
+        "uuid": "f23464df-abcc-40cf-bf99-f71463df633c"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "component_dimensions": {
+          "value": [
+            [
+              1.0
+            ]
+          ],
+          "version": 1
+        },
+        "data_format": {
+          "value": "",
+          "version": 1
+        },
+        "init_end_range": {
+          "value": "1;1;1",
+          "version": 1
+        },
+        "init_start_range": {
+          "value": "0;0;0",
+          "version": 1
+        },
+        "init_type_index": {
+          "value": 1,
+          "version": 1
+        },
+        "init_value": {
+          "value": "1;1;1",
+          "version": 1
+        },
+        "numeric_type_index": {
+          "value": 1,
+          "version": 1
+        },
+        "output_array_path": {
+          "value": "Data_Group/uint8_data",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "seed_array_name": {
+          "value": "InitializeDataFilter SeedValue",
+          "version": 1
+        },
+        "seed_value": {
+          "value": 5489,
+          "version": 1
+        },
+        "set_tuple_dimensions": {
+          "value": true,
+          "version": 1
+        },
+        "standardize_seed": {
+          "value": false,
+          "version": 1
+        },
+        "starting_fill_value": {
+          "value": "0",
+          "version": 1
+        },
+        "step_operation_index": {
+          "value": 0,
+          "version": 1
+        },
+        "step_value": {
+          "value": "1",
+          "version": 1
+        },
+        "tuple_dimensions": {
+          "value": [
+            [
+              20.0
+            ]
+          ],
+          "version": 1
+        },
+        "use_seed": {
+          "value": false,
+          "version": 1
+        }
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::CreateDataArrayAdvancedFilter",
+        "uuid": "f23464df-abcc-40cf-bf99-f71463df633c"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "array_handling_index": {
+          "value": 1,
+          "version": 1
+        },
+        "cell_attribute_matrix_name": {
+          "value": "Cell Data",
+          "version": 1
+        },
+        "dimensions": {
+          "value": [
+            4,
+            6,
+            8
+          ],
+          "version": 1
+        },
+        "edge_attribute_matrix_name": {
+          "value": "Edge Data",
+          "version": 1
+        },
+        "edge_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "face_attribute_matrix_name": {
+          "value": "Face Data",
+          "version": 1
+        },
+        "geometry_type_index": {
+          "value": 0,
+          "version": 1
+        },
+        "hexahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "length_unit_index": {
+          "value": 7,
+          "version": 1
+        },
+        "origin": {
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": 1
+        },
+        "output_geometry_path": {
+          "value": "ImageGeometry",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "quadrilateral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "spacing": {
+          "value": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": 1
+        },
+        "tetrahedral_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "triangle_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "vertex_attribute_matrix_name": {
+          "value": "Vertex Data",
+          "version": 1
+        },
+        "vertex_list_path": {
+          "value": "",
+          "version": 1
+        },
+        "warnings_as_errors": {
+          "value": false,
+          "version": 1
+        },
+        "x_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "y_bounds_path": {
+          "value": "",
+          "version": 1
+        },
+        "z_bounds_path": {
+          "value": "",
+          "version": 1
+        }
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::CreateGeometryFilter",
+        "uuid": "24768170-5b90-4a9d-82ac-9aeecd9f892e"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "component_dimensions": {
+          "value": [
+            [
+              1.0
+            ]
+          ],
+          "version": 1
+        },
+        "data_format": {
+          "value": "",
+          "version": 1
+        },
+        "init_end_range": {
+          "value": "1;1;1",
+          "version": 1
+        },
+        "init_start_range": {
+          "value": "0;0;0",
+          "version": 1
+        },
+        "init_type_index": {
+          "value": 1,
+          "version": 1
+        },
+        "init_value": {
+          "value": "1;1;1",
+          "version": 1
+        },
+        "numeric_type_index": {
+          "value": 4,
+          "version": 1
+        },
+        "output_array_path": {
+          "value": "ImageGeometry/Cell Data/FeatureIds",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "seed_array_name": {
+          "value": "InitializeDataFilter SeedValue",
+          "version": 1
+        },
+        "seed_value": {
+          "value": 5489,
+          "version": 1
+        },
+        "set_tuple_dimensions": {
+          "value": false,
+          "version": 1
+        },
+        "standardize_seed": {
+          "value": false,
+          "version": 1
+        },
+        "starting_fill_value": {
+          "value": "0",
+          "version": 1
+        },
+        "step_operation_index": {
+          "value": 0,
+          "version": 1
+        },
+        "step_value": {
+          "value": "1",
+          "version": 1
+        },
+        "tuple_dimensions": {
+          "value": [
+            [
+              1.0
+            ]
+          ],
+          "version": 1
+        },
+        "use_seed": {
+          "value": false,
+          "version": 1
+        }
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::CreateDataArrayAdvancedFilter",
+        "uuid": "f23464df-abcc-40cf-bf99-f71463df633c"
+      },
+      "isDisabled": false
+    },
+    {
+      "args": {
+        "export_file_path": {
+          "value": "example_datastructure.dream3d",
+          "version": 1
+        },
+        "parameters_version": 1,
+        "write_xdmf_file": {
+          "value": false,
+          "version": 1
+        }
+      },
+      "comments": "",
+      "filter": {
+        "name": "nx::core::WriteDREAM3DFilter",
+        "uuid": "b3a95784-2ced-41ec-8d3d-0242ac130003"
+      },
+      "isDisabled": true
+    }
+  ],
+  "version": 1,
+  "workflowParams": []
+}
