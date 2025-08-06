@@ -1,6 +1,5 @@
 from typing import List
 import simplnx as nx
-import numpy as np
 
 class Exercise1:
 
@@ -12,7 +11,7 @@ class Exercise1:
     :return: The Filter's Uuid value
     :rtype: string
     """
-    return nx.Uuid('91a6ba07-4f1b-4d73-94f0-de422e00f105')
+    return nx.Uuid('f141853b-c1f5-4e6a-bad4-6a46b1d0192b')
 
   def class_name(self) -> str:
     """The returns the name of the class that implements the filter
@@ -61,21 +60,29 @@ class Exercise1:
   This section should contain the 'keys' that store each parameter. The value of the key should be snake_case. The name
   of the value should be ALL_CAPITOL_KEY
   """
-  INPUT_ARRAY_PATH_KEY = "input_array_path"
-  OUTPUT_ARRAY_NAME_KEY = 'output_array_name'
-  INPUT_DIR_KEY ="some_input_dir"
-  
+  OUTPUT_ARRAY_PATH_KEY = 'output_array_path'
+  DELTA_VALUE_KEY = 'delta_value'
+  INPUT_ARRAY_PATH_KEY = 'input_array_path'
+
   def parameters(self) -> nx.Parameters:
     """This function defines the parameters that are needed by the filter. Parameters collect the values from the user interface
     and pack them up into a dictionary for use in the preflight and execute methods.
     """
     params = nx.Parameters()
 
-    params.insert(nx.Parameters.Separator("Required Data Objects"))
+    params.insert(nx.Parameters.Separator("Input Parameters"))
+    params.insert(nx.UInt64Parameter(Exercise1.DELTA_VALUE_KEY, 'Num Tuples', 'The number of tuples the array will have', 0))
+    params.insert(nx.ArraySelectionParameter(
+                                  Exercise1.INPUT_ARRAY_PATH_KEY, 
+                                  'Array Selection', 
+                                  'Example array selection help text', 
+                                  nx.DataPath([]), 
+                                  nx.get_all_data_types(), 
+                                  [[1]]
+                                  ))
 
-    # Use an Array Selection Parameter to get a Float32 array with 3 components ONLY.
-    # https://www.dream3d.io/python_docs/Developer_API.html#ArraySelectionParameter
-    params.insert(nx.ArraySelectionParameter(Exercise1.INPUT_ARRAY_PATH_KEY, 'Input Mask Array', 'Input Array with mask', nx.DataPath(), {nx.DataType.uint8, nx.DataType.boolean}, [[1]]))
+    params.insert(nx.Parameters.Separator("Output Parameters"))
+    params.insert(nx.ArrayCreationParameter(Exercise1.OUTPUT_ARRAY_PATH_KEY, 'Created Array', 'Array storing the data', nx.DataPath()))
 
     return params
 
@@ -90,15 +97,21 @@ class Exercise1:
     :rtype: nx.IFilter.PreflightResult
     """
 
-    # Extract the values from the user interface from the 'args' 
-    input_array_path: nx.DataPath = args[Exercise1.INPUT_ARRAY_PATH_KEY]
-    
+    # Extract the values from the user interface from the 'args'
+    data_array_path: nx.DataPath = args[Exercise1.OUTPUT_ARRAY_PATH_KEY]
+    delta_value: int = args[Exercise1.DELTA_VALUE_KEY]
+
+    # Create an OutputActions object to hold any DataStructure modifications that we are going to make
+    output_actions = nx.OutputActions()
+
+    # Append a "CreateArrayAction"
+    output_actions.append_action(nx.CreateArrayAction(nx.DataType.float32, [delta_value], [1], data_array_path))
+
     # Send back any messages that will appear in the "Output" widget in the UI. This is optional.
-    # You can use this as a crude debugging aid if needed.
-    message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f"Preflight"))
+    message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f"Creating array at: '{data_array_path.to_string('/')}'"))
 
     # Return the output_actions so the changes are reflected in the User Interface.
-    return nx.IFilter.PreflightResult(output_actions=None, errors=None, warnings=None, preflight_values=None)
+    return nx.IFilter.PreflightResult(output_actions=output_actions, errors=None, warnings=None, preflight_values=None)
 
   def execute_impl(self, data_structure: nx.DataStructure, args: dict, message_handler: nx.IFilter.MessageHandler, should_cancel: nx.AtomicBoolProxy) -> nx.IFilter.ExecuteResult:
     """ This method actually executes the filter algorithm and reports results.
@@ -107,36 +120,19 @@ class Exercise1:
     """
     # Extract the values from the user interface from the 'args'
     # This is basically repeated from the preflight because the variables are scoped to the method()
-    input_array_path: nx.DataPath = args[Exercise1.INPUT_ARRAY_PATH_KEY]
+    output_array_path: nx.DataPath = args[Exercise1.OUTPUT_ARRAY_PATH_KEY]
+    delta_value: int = args[Exercise1.DELTA_VALUE_KEY]
     
-  
-    # The output array has been properly allocated at this point. Get a numpy
-    # view of the input and output data arrays
-    input_array_view = data_structure[input_array_path].npview()
-
+    # At this point the array has been allocated with the proper number of tuples and components. And we can access
+    # the data array through a numpy view.
+    output_array_view = data_structure[output_array_path].npview()
     # Now you can go off and use numpy or anything else that can use a numpy view to modify the data
     # or use the data in another calculation. Any operation that works on the numpy view in-place
     # has an immediate effect within the DataStructure
-    zeros_count = np.sum(input_array_view == 0)
-    pct = zeros_count / input_array_view.size
-
-    print(f'zeros_count: {zeros_count}/{input_array_view.size} or {pct}%')
 
     # -----------------------------------------------------------------------------
     # If you want to send back progress on your filter, you can use the message_handler
     # -----------------------------------------------------------------------------
-    message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f'Conversion complete'))
-
-    # -----------------------------------------------------------------------------
-    # If you have a long running process, check the should_cancel to see if the user cancelled the filter
-    # -----------------------------------------------------------------------------
-    if not should_cancel:
-      return nx.Result()
-
+    message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f'Information Message: Delta value = {delta_value}'))
 
     return nx.Result()
-
-
-
-
-
