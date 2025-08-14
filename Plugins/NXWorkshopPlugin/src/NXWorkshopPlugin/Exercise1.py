@@ -1,4 +1,5 @@
 import simplnx as nx
+import numpy as np
 
 class Exercise1:
 
@@ -59,9 +60,9 @@ class Exercise1:
   This section should contain the 'keys' that store each parameter. The value of the key should be snake_case. The name
   of the value should be ALL_CAPITAL_KEY
   """
-  INPUT_ARRAY_PATH_KEY = 'input_array_path'
-  OUTPUT_ARRAY_PATH_KEY = 'output_array_path'
-  DELTA_VALUE_KEY = 'delta_value'
+  # INPUT_ARRAY_PATH_KEY = 'input_array_path'
+  # OUTPUT_ARRAY_PATH_KEY = 'output_array_path'
+  # DELTA_VALUE_KEY = 'delta_value'
 
   def parameters(self) -> nx.Parameters:
     """This function defines the parameters that are needed by the filter. Parameters collect the values from the user interface
@@ -69,20 +70,22 @@ class Exercise1:
     """
     params = nx.Parameters()
 
-    params.insert(nx.Parameters.Separator('Input Parameters'))
-    params.insert(nx.Float32Parameter(Exercise1.DELTA_VALUE_KEY, 'Delta Value', 'The value to add', 0.0))
-    params.insert(nx.ArraySelectionParameter(
-      Exercise1.INPUT_ARRAY_PATH_KEY,
-      'Array Selection',
-      'Example array selection help text',
-      nx.DataPath(),
-      {nx.DataType.float32},
-      [[1]],
-      )
-    )
+    # params.insert(nx.Parameters.Separator('Input Parameters'))
+    # params.insert(nx.Int32Parameter(Exercise1.DELTA_VALUE_KEY, 'Incorrect value', 'The value to add', 0))
 
-    params.insert(nx.Parameters.Separator("Output Parameters"))
-    params.insert(nx.ArrayCreationParameter(Exercise1.OUTPUT_ARRAY_PATH_KEY, 'Created Array', 'Array storing the data', nx.DataPath()))
+    # params.insert(
+    #   nx.ArraySelectionParameter(
+    #     Exercise1.INPUT_ARRAY_PATH_KEY,
+    #     'Array Selection',
+    #     'Example array selection help text',
+    #     nx.DataPath(),
+    #     {nx.DataType.float32},
+    #     [[1]],
+    #   )
+    # )
+
+    # params.insert(nx.Parameters.Separator("Output Parameters"))
+    # params.insert(nx.ArrayCreationParameter(Exercise1.OUTPUT_ARRAY_PATH_KEY, 'Created Array', 'Array storing the data', nx.DataPath()))
 
     return params
 
@@ -101,12 +104,17 @@ class Exercise1:
     :rtype: nx.IFilter.PreflightResult
     """
 
-    data_array_path: nx.DataPath = args[Exercise1.OUTPUT_ARRAY_PATH_KEY]
-    delta_value: int = args[Exercise1.DELTA_VALUE_KEY]
+    # output_array_path: nx.DataPath = args[Exercise1.OUTPUT_ARRAY_PATH_KEY]
+    # input_array_path: nx.DataPath = args[Exercise1.INPUT_ARRAY_PATH_KEY]
+    # delta_value: int = args[Exercise1.DELTA_VALUE_KEY]
+
+    # message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f'Delta Value: {delta_value}'))
+
+    # input_array: nx.IDataArray = data_structure[input_array_path]
 
     output_actions = nx.OutputActions()
 
-    output_actions.append_action(nx.CreateArrayAction(nx.DataType.float32, [delta_value], [1], data_array_path))
+    # output_actions.append_action(nx.CreateArrayAction(input_array.data_type, input_array.tdims, input_array.cdims, output_array_path))
 
     return nx.IFilter.PreflightResult(output_actions=output_actions, errors=None, warnings=None, preflight_values=None)
 
@@ -115,16 +123,18 @@ class Exercise1:
     :returns:
     :rtype: nx.IFilter.ExecuteResult
     """
-    input_array_path: nx.DataPath = args[Exercise1.INPUT_ARRAY_PATH_KEY]
-    output_array_path: nx.DataPath = args[Exercise1.OUTPUT_ARRAY_PATH_KEY]
-    delta_value: int = args[Exercise1.DELTA_VALUE_KEY]
+    # input_array_path: nx.DataPath = args[Exercise1.INPUT_ARRAY_PATH_KEY]
+    # output_array_path: nx.DataPath = args[Exercise1.OUTPUT_ARRAY_PATH_KEY]
+    # delta_value: int = args[Exercise1.DELTA_VALUE_KEY]
 
-    output_array_view = data_structure[output_array_path].npview()
+    # input_array_view: np.ndarray = data_structure[input_array_path].npview()
+    # output_array_view: np.ndarray = data_structure[output_array_path].npview()
 
-    message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f'Before: {output_array_view}'))
+    # message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f'Input: {input_array_view}'))
+    # message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f'Output Before: {output_array_view}'))
 
-    output_array_view[:] = input_array_path + delta_value
+    # output_array_view[:] = input_array_view + delta_value
 
-    message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f'After: {output_array_view}'))
+    # message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f'Output After: {output_array_view}'))
 
     return nx.Result()
