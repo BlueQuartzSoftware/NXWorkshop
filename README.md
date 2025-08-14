@@ -1,5 +1,7 @@
 # NXWorkshop
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/BlueQuartzSoftware/NXWorkshop/cmu2025)
+
 Support materials for DREAM3D-NX Workshops including DREAM3D-NX tutorials and Python tutorials
 
 The main DREAM3D-NX Python documentation site, including self paced tutorials is at [https://www.dream3d.io/python_docs](https://www.dream3d.io/python_docs)
