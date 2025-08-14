@@ -25,12 +25,5 @@ from .Exercise3 import Exercise3
 __all__.append('Exercise3')
 # FILTER_END: Exercise3
 
-# FILTER_START: Exercise4
-from .Exercise4 import Exercise4
-__all__.append('Exercise4')
-# FILTER_END: Exercise4
-
-
-
 def get_plugin():
   return NXWorkshopPlugin()

@@ -23,13 +23,6 @@ from .Exercise3 import Exercise3
 _filters.append(Exercise3)
 # FILTER_END: Exercise3
 
-# FILTER_START: Exercise4
-from .Exercise4 import Exercise4
-_filters.append(Exercise4)
-# FILTER_END: Exercise4
-
-
-
 import simplnx as nx
 
 class NXWorkshopPlugin:
