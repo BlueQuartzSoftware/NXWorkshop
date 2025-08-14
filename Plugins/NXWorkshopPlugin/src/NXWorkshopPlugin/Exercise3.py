@@ -1,4 +1,5 @@
 import simplnx as nx
+import time
 
 class Exercise3:
 
@@ -90,21 +91,39 @@ class Exercise3:
     output_actions = nx.OutputActions()
     
     # Create the Errors and Warnings Lists to commuicate back to the user if anything has gone wrong
-    # errors = []
-    warnings = []
+    # errors: list[nx.Error] = []
+    warnings: list[nx.Warning] = []
+    preflight_values: list[nx.IFilter.PreflightValue] = []
 
     # Create a nx.Warning and append it onto the warnings[] list.
     warnings.append(nx.Warning(-65020, 'Warning from preflight'))
 
+    preflight_values.append(nx.IFilter.PreflightValue('Name of value', f'String to be displayed in GUI. Bool is {bool_value}.'))
+
     if bool_value:
       return nx.IFilter.PreflightResult(output_actions=None, errors=[nx.Error(-8700, f'An error occurred in preflight')], warnings=warnings)
 
-    return nx.IFilter.PreflightResult(output_actions=output_actions, errors=None, warnings=warnings, preflight_values=None)
+    # X Y Z ordering
+    # Different from array dimension ordering!
+    dims: list[int] = [10, 2, 3]
+
+    origin: list[float] = [0, 0, 0]
+    spacing: list[float] = [1, 1, 1]
+    output_actions.append_action(nx.CreateImageGeometryAction(nx.DataPath('Image Geometry'), dims, origin, spacing, 'Cell Data'))
+
+    return nx.IFilter.PreflightResult(output_actions=output_actions, errors=None, warnings=warnings, preflight_values=preflight_values)
 
   def execute_impl(self, data_structure: nx.DataStructure, args: dict, message_handler: nx.IFilter.MessageHandler, should_cancel: nx.AtomicBoolProxy) -> nx.IFilter.ExecuteResult:
     """This method actually executes the filter algorithm and reports results.
     :returns:
     :rtype: nx.IFilter.ExecuteResult
     """
+
+    for i in range(10):
+      # Cancel before iteration to avoid having to wait longer to cancel
+      if should_cancel:
+        return nx.Result()
+      # Some long function
+      time.sleep(10)
 
     return nx.Result()
