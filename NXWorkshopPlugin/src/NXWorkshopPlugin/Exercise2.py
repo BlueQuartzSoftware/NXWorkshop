@@ -1,4 +1,3 @@
-from typing import List
 import simplnx as nx
 
 class Exercise2:
@@ -48,22 +47,22 @@ class Exercise2:
     """
     return 'Exercise2 (Python)'
  
-  def default_tags(self) -> List[str]:
+  def default_tags(self) -> list[str]:
     """This returns the default tags for this filter
     :return: The default tags for the filter
     :rtype: list
     """
     return ['python', 'Exercise2']
-  
-  
+
+
   """
   This section should contain the 'keys' that store each parameter. The value of the key should be snake_case. The name
-  of the value should be ALL_CAPITOL_KEY
+  of the value should be ALL_CAPITAL_KEY
   """
   A_BOOLEAN_KEY = 'my_boolean_value'
   IMAGE_DIMS_KEY = 'image_dims'
-  INTERPOLATION_METHOD_KEY = "interpolation_method"
-  INTERPOLATION_VALUE_KEY = "interpolation_value"
+  INTERPOLATION_METHOD_KEY = 'interpolation_method'
+  INTERPOLATION_VALUE_KEY = 'interpolation_value'
 
   def parameters(self) -> nx.Parameters:
     """This function defines the parameters that are needed by the filter. Parameters collect the values from the user interface
@@ -74,24 +73,36 @@ class Exercise2:
     params.insert(nx.Parameters.Separator("Linking to a Boolean Parameter"))
 
     # Use the insert_linkable_parameter API to insert a parameter to which _another_ parameter will be "linked".
+    # Only BoolParameter and ChoicesParameter can be used for linking currently.
+    # Linked parameters will only be visible and checked when their associated value is in the controlling parameter
+    # e.g. A parameters that will only be active when this parameter is true.
     params.insert_linkable_parameter(nx.BoolParameter(Exercise2.A_BOOLEAN_KEY, 'Resize the Image', 'Should we resize the image', False))
 
-    # Insert the parameter that will be linked, is not required to be the next parameter added.
+    # Insert the parameter that will be linked. This statement is not required to be directly after the previous.
     params.insert(nx.VectorUInt64Parameter(Exercise2.IMAGE_DIMS_KEY, 'Image Size', 'The width and height of the output image.', [800, 600], ['Width', 'Height']))
 
-    # Tell the nx.Parameters object that these to parameters are linked together and what value it is linked to.
+    # Tell the nx.Parameters object that these two parameters are linked together and what value it is linked to.
+    # Here our image dimensions parameter will be active when our boolean parameter is true.
     params.link_parameters(Exercise2.A_BOOLEAN_KEY, Exercise2.IMAGE_DIMS_KEY, True)
 
+    params.insert(nx.Parameters.Separator('Linking to a Choice Parameter'))
 
-    params.insert(nx.Parameters.Separator("Linking to a Choice Parameter"))
+    # Insert a ChoicesParameter which has 3 options: "Nearest", "Linear", "Cubic"
     params.insert_linkable_parameter(nx.ChoicesParameter(Exercise2.INTERPOLATION_METHOD_KEY, 'Interpolation Method', 'The method used to interpolate the input data.', 0, ['Nearest', 'Linear', 'Cubic']))
-    params.insert(nx.Float32Parameter(Exercise2.INTERPOLATION_VALUE_KEY, "Interpolation Value", "The value to use for interpolation", 1.0))
-    params.link_parameters(Exercise2.INTERPOLATION_METHOD_KEY, Exercise2.INTERPOLATION_VALUE_KEY, 1)
 
+    # Insert our parameter to link
+    params.insert(nx.Float32Parameter(Exercise2.INTERPOLATION_VALUE_KEY, 'Interpolation Value', 'The value to use for interpolation', 1.0))
+
+    # Link "Interpolation Value" parameter to the ChoicesParameter. It is linked to the index ` which is the "Linear" option.
+    params.link_parameters(Exercise2.INTERPOLATION_METHOD_KEY, Exercise2.INTERPOLATION_VALUE_KEY, 1)
 
     return params
 
   def parameters_version(self) -> int:
+    """This method should initially return 1.
+    Then whenever one or more parameters is added or removed from the filter
+    the return value should be incremented.
+    """
     return 1
 
   def preflight_impl(self, data_structure: nx.DataStructure, args: dict, message_handler: nx.IFilter.MessageHandler, should_cancel: nx.AtomicBoolProxy) -> nx.IFilter.PreflightResult:
@@ -102,54 +113,13 @@ class Exercise2:
     :rtype: nx.IFilter.PreflightResult
     """
 
-    # Extract the values from the user interface from the 'args' 
-
-      
-    # Create an OutputActions object to hold any DataStructure modifications that we are going to make
     output_actions = nx.OutputActions()
-    
-    # Create the Errors and Warnings Lists to commuicate back to the user if anything has gone wrong
-    # errors = []
-    # warnings = []
-    # preflight_values = []
 
-    # Send back any messages that will appear in the "Output" widget in the UI. This is optional.
-
-    # Return the output_actions so the changes are reflected in the User Interface.
     return nx.IFilter.PreflightResult(output_actions=output_actions, errors=None, warnings=None, preflight_values=None)
 
   def execute_impl(self, data_structure: nx.DataStructure, args: dict, message_handler: nx.IFilter.MessageHandler, should_cancel: nx.AtomicBoolProxy) -> nx.IFilter.ExecuteResult:
-    """ This method actually executes the filter algorithm and reports results.
+    """This method actually executes the filter algorithm and reports results.
     :returns:
     :rtype: nx.IFilter.ExecuteResult
     """
-    # Extract the values from the user interface from the 'args'
-    # This is basically repeated from the preflight because the variables are scoped to the method()
-    
-    
-    # At this point the array has been allocated with the proper number of tuples and components. And we can access
-    # the data array through a numpy view.
-    
-
-
-    # Now you can go off and use numpy or anything else that can use a numpy view to modify the data
-    # or use the data in another calculation. Any operation that works on the numpy view in-place
-    # has an immediate effect within the DataStructure
-
-    # -----------------------------------------------------------------------------
-    # If you want to send back progress on your filter, you can use the message_handler
-    # -----------------------------------------------------------------------------
-    message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f'Information Message:'))
-
-    # -----------------------------------------------------------------------------
-    # If you have a long running process, check the should_cancel to see if the user cancelled the filter
-    # -----------------------------------------------------------------------------
-    if not should_cancel:
-      return nx.Result()
-
-
     return nx.Result()
-
-
-
-

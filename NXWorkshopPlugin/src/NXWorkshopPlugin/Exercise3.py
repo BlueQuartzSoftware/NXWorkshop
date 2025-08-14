@@ -1,4 +1,3 @@
-from typing import List
 import simplnx as nx
 
 class Exercise3:
@@ -47,18 +46,18 @@ class Exercise3:
     :rtype: string
     """
     return 'Exercise3 (Python)'
- 
-  def default_tags(self) -> List[str]:
+
+  def default_tags(self) -> list[str]:
     """This returns the default tags for this filter
     :return: The default tags for the filter
     :rtype: list
     """
     return ['python', 'Exercise3']
-  
-  
+
+
   """
   This section should contain the 'keys' that store each parameter. The value of the key should be snake_case. The name
-  of the value should be ALL_CAPITOL_KEY
+  of the value should be ALL_CAPITAL_KEY
   """
   A_BOOLEAN_KEY = 'my_boolean_value'
 
@@ -72,6 +71,10 @@ class Exercise3:
     return params
 
   def parameters_version(self) -> int:
+    """This method should initially return 1.
+    Then whenever one or more parameters is added or removed from the filter
+    the return value should be incremented.
+    """
     return 1
 
   def preflight_impl(self, data_structure: nx.DataStructure, args: dict, message_handler: nx.IFilter.MessageHandler, should_cancel: nx.AtomicBoolProxy) -> nx.IFilter.PreflightResult:
@@ -81,46 +84,27 @@ class Exercise3:
     :returns:
     :rtype: nx.IFilter.PreflightResult
     """
+
     bool_value = args[Exercise3.A_BOOLEAN_KEY]
 
-    # Create an OutputActions object to hold any DataStructure modifications that we are going to make
     output_actions = nx.OutputActions()
     
     # Create the Errors and Warnings Lists to commuicate back to the user if anything has gone wrong
     # errors = []
     warnings = []
-    # preflight_values = []
 
     # Create a nx.Warning and append it onto the warnings[] list.
-    warnings.append(nx.Warning(-65020, "Warning from preflight"))
+    warnings.append(nx.Warning(-65020, 'Warning from preflight'))
 
     if bool_value:
-      return nx.IFilter.PreflightResult(None, [nx.Error(-8700, f"Preflight threw an error")])
+      return nx.IFilter.PreflightResult(output_actions=None, errors=[nx.Error(-8700, f'An error occurred in preflight')], warnings=warnings)
 
-
-    # Return the output_actions so the changes are reflected in the User Interface.
     return nx.IFilter.PreflightResult(output_actions=output_actions, errors=None, warnings=warnings, preflight_values=None)
 
   def execute_impl(self, data_structure: nx.DataStructure, args: dict, message_handler: nx.IFilter.MessageHandler, should_cancel: nx.AtomicBoolProxy) -> nx.IFilter.ExecuteResult:
-    """ This method actually executes the filter algorithm and reports results.
+    """This method actually executes the filter algorithm and reports results.
     :returns:
     :rtype: nx.IFilter.ExecuteResult
     """
 
-    # -----------------------------------------------------------------------------
-    # If you want to send back progress on your filter, you can use the message_handler
-    # -----------------------------------------------------------------------------
-    message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f'Information Message'))
-
-    # -----------------------------------------------------------------------------
-    # If you have a long running process, check the should_cancel to see if the user cancelled the filter
-    # -----------------------------------------------------------------------------
-    if not should_cancel:
-      return nx.Result()
-
-
     return nx.Result()
-
-
-
-

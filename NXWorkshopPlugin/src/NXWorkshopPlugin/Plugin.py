@@ -2,7 +2,7 @@
 Insert documentation here.
 """
 
-_filters = []
+_filters: list = []
 
 """
 This section conditionally tries to import each filter
@@ -43,14 +43,14 @@ class NXWorkshopPlugin:
     """The returns the name of plugin. DO NOT Change this
     :return: The name of the plugin
     :rtype: string
-    """    
+    """
     return 'NXWorkshopPlugin'
 
   def description(self) -> str:
     """This returns the description of the plugin. Feel free to edit this.
     :return: The plugin's descriptive text
     :rtype: string
-    """    
+    """
     return 'NXWorkshopPlugin'
 
   def vendor(self) -> str:
@@ -62,4 +62,3 @@ class NXWorkshopPlugin:
 
   def get_filters(self):
     return _filters
-

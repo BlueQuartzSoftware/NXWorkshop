@@ -1,4 +1,3 @@
-from typing import List
 import simplnx as nx
 
 class Exercise1:
@@ -47,22 +46,22 @@ class Exercise1:
     :rtype: string
     """
     return 'Exercise1 (Python)'
- 
-  def default_tags(self) -> List[str]:
+
+  def default_tags(self) -> list[str]:
     """This returns the default tags for this filter
     :return: The default tags for the filter
     :rtype: list
     """
     return ['python', 'Exercise1']
-  
-  
+
+
   """
   This section should contain the 'keys' that store each parameter. The value of the key should be snake_case. The name
-  of the value should be ALL_CAPITOL_KEY
+  of the value should be ALL_CAPITAL_KEY
   """
+  INPUT_ARRAY_PATH_KEY = 'input_array_path'
   OUTPUT_ARRAY_PATH_KEY = 'output_array_path'
   DELTA_VALUE_KEY = 'delta_value'
-  INPUT_ARRAY_PATH_KEY = 'input_array_path'
 
   def parameters(self) -> nx.Parameters:
     """This function defines the parameters that are needed by the filter. Parameters collect the values from the user interface
@@ -70,16 +69,17 @@ class Exercise1:
     """
     params = nx.Parameters()
 
-    params.insert(nx.Parameters.Separator("Input Parameters"))
-    params.insert(nx.UInt64Parameter(Exercise1.DELTA_VALUE_KEY, 'Num Tuples', 'The number of tuples the array will have', 0))
+    params.insert(nx.Parameters.Separator('Input Parameters'))
+    params.insert(nx.Float32Parameter(Exercise1.DELTA_VALUE_KEY, 'Delta Value', 'The value to add', 0.0))
     params.insert(nx.ArraySelectionParameter(
-                                  Exercise1.INPUT_ARRAY_PATH_KEY, 
-                                  'Array Selection', 
-                                  'Example array selection help text', 
-                                  nx.DataPath([]), 
-                                  nx.get_all_data_types(), 
-                                  [[1]]
-                                  ))
+      Exercise1.INPUT_ARRAY_PATH_KEY,
+      'Array Selection',
+      'Example array selection help text',
+      nx.DataPath(),
+      {nx.DataType.float32},
+      [[1]],
+      )
+    )
 
     params.insert(nx.Parameters.Separator("Output Parameters"))
     params.insert(nx.ArrayCreationParameter(Exercise1.OUTPUT_ARRAY_PATH_KEY, 'Created Array', 'Array storing the data', nx.DataPath()))
@@ -87,6 +87,10 @@ class Exercise1:
     return params
 
   def parameters_version(self) -> int:
+    """This method should initially return 1.
+    Then whenever one or more parameters is added or removed from the filter
+    the return value should be incremented.
+    """
     return 1
 
   def preflight_impl(self, data_structure: nx.DataStructure, args: dict, message_handler: nx.IFilter.MessageHandler, should_cancel: nx.AtomicBoolProxy) -> nx.IFilter.PreflightResult:
@@ -97,42 +101,30 @@ class Exercise1:
     :rtype: nx.IFilter.PreflightResult
     """
 
-    # Extract the values from the user interface from the 'args'
     data_array_path: nx.DataPath = args[Exercise1.OUTPUT_ARRAY_PATH_KEY]
     delta_value: int = args[Exercise1.DELTA_VALUE_KEY]
 
-    # Create an OutputActions object to hold any DataStructure modifications that we are going to make
     output_actions = nx.OutputActions()
 
-    # Append a "CreateArrayAction"
     output_actions.append_action(nx.CreateArrayAction(nx.DataType.float32, [delta_value], [1], data_array_path))
 
-    # Send back any messages that will appear in the "Output" widget in the UI. This is optional.
-    message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f"Creating array at: '{data_array_path.to_string('/')}'"))
-
-    # Return the output_actions so the changes are reflected in the User Interface.
     return nx.IFilter.PreflightResult(output_actions=output_actions, errors=None, warnings=None, preflight_values=None)
 
   def execute_impl(self, data_structure: nx.DataStructure, args: dict, message_handler: nx.IFilter.MessageHandler, should_cancel: nx.AtomicBoolProxy) -> nx.IFilter.ExecuteResult:
-    """ This method actually executes the filter algorithm and reports results.
+    """This method actually executes the filter algorithm and reports results.
     :returns:
     :rtype: nx.IFilter.ExecuteResult
     """
-    # Extract the values from the user interface from the 'args'
-    # This is basically repeated from the preflight because the variables are scoped to the method()
+    input_array_path: nx.DataPath = args[Exercise1.INPUT_ARRAY_PATH_KEY]
     output_array_path: nx.DataPath = args[Exercise1.OUTPUT_ARRAY_PATH_KEY]
     delta_value: int = args[Exercise1.DELTA_VALUE_KEY]
-    
-    # At this point the array has been allocated with the proper number of tuples and components. And we can access
-    # the data array through a numpy view.
-    output_array_view = data_structure[output_array_path].npview()
-    # Now you can go off and use numpy or anything else that can use a numpy view to modify the data
-    # or use the data in another calculation. Any operation that works on the numpy view in-place
-    # has an immediate effect within the DataStructure
 
-    # -----------------------------------------------------------------------------
-    # If you want to send back progress on your filter, you can use the message_handler
-    # -----------------------------------------------------------------------------
-    message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f'Information Message: Delta value = {delta_value}'))
+    output_array_view = data_structure[output_array_path].npview()
+
+    message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f'Before: {output_array_view}'))
+
+    output_array_view[:] = input_array_path + delta_value
+
+    message_handler(nx.IFilter.Message(nx.IFilter.Message.Type.Info, f'After: {output_array_view}'))
 
     return nx.Result()
