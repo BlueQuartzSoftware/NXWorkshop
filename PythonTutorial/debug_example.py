@@ -11,4 +11,5 @@ pyfilter = nx.PyFilter(NXWorkshopPlugin.Exercise1())
 
 data_structure = nx.DataStructure()
 
+# For now the call to use is execute2
 result = pyfilter.execute2(data_structure)
