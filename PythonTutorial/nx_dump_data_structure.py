@@ -4,12 +4,9 @@ This demo file requries the pygraphviz package to be install
 """
 
 import simplnx as nx
-import nxutility
-
-import numpy as np
 import matplotlib.pyplot as plt
 import pygraphviz as pgv
-import os
+import io
 
 def show_data_structure_heirarchy(data_structure: nx.DataStructure) -> None:
     """
@@ -22,53 +19,63 @@ def show_data_structure_heirarchy(data_structure: nx.DataStructure) -> None:
 
     # Create a graph from the DOT string using pygraphviz
     G = pgv.AGraph(string=graphviz_content)
-    temp_file_path = '.graphviz_output.png'
 
     # Render the graph to a PNG file
-    G.draw(temp_file_path, format='png', prog='dot')
-  
+    image_data = G.draw(None, format='png', prog='dot')
+
     # Use Matplotlib to display the generated image
-    img = plt.imread(temp_file_path)
+    img = plt.imread(io.BytesIO(image_data))
     fig, ax = plt.subplots()
     ax.imshow(img)
     ax.axis('off')  # Hide axes
     plt.show()
 
-    # Check if the file exists to avoid an error if the file is not found
-    if os.path.exists(temp_file_path):
-        os.remove(temp_file_path)
-        print("File has been deleted successfully.")
 
-def create_data_structure():
-
+def create_data_structure() -> nx.DataStructure:
     #------------------------------------------------------------------------------
     # Create a DataStructure will something in it 
     #------------------------------------------------------------------------------
     data_structure = nx.DataStructure()
 
-    result = nx.CreateDataGroupFilter.execute(data_structure=data_structure,
-                                        data_object_path=nx.DataPath('Small IN100'))
-    result = nx.CreateDataGroupFilter.execute(data_structure=data_structure,
-                                        data_object_path=nx.DataPath('Small IN100/Scan Data'))
-    result = nx.CreateDataGroupFilter.execute(data_structure=data_structure,
-                                        data_object_path=nx.DataPath('Small IN100/Phase Data'))
-    result = nx.CreateDataArrayFilter.execute(data_structure=data_structure, 
-                                        component_count=3, 
-                                        initialization_value="3.14159", 
-                                        numeric_type=nx.NumericType.float32, 
-                                        output_data_array=nx.DataPath('Small IN100/Scan Data/Eulers'), 
-                                        tuple_dimensions=[[5,5]] )
-    result = nx.CreateDataArrayFilter.execute(data_structure=data_structure, 
-                                        component_count=1, 
-                                        initialization_value="0", 
-                                        numeric_type=nx.NumericType.int32, 
-                                        output_data_array=nx.DataPath('Small IN100/Scan Data/Phases'), 
-                                        tuple_dimensions=[[5,5]] )
-    result = nx.CreateDataArrayFilter.execute(data_structure=data_structure, 
-                                        component_count=1, 
-                                        initialization_value="0", 
-                                        numeric_type=nx.NumericType.uint32, 
-                                        output_data_array=nx.DataPath('Small IN100/Phase Data/Crystal Structures'), 
-                                        tuple_dimensions=[[5,5]] )
+    assert nx.CreateDataGroupFilter.execute(
+        data_structure=data_structure,
+        data_object_path=nx.DataPath('Small IN100'),
+    )
+    assert nx.CreateDataGroupFilter.execute(
+        data_structure=data_structure,
+        data_object_path=nx.DataPath('Small IN100/Scan Data'),
+    )
+    assert nx.CreateDataGroupFilter.execute(
+        data_structure=data_structure,
+        data_object_path=nx.DataPath('Small IN100/Phase Data'),
+    )
+    assert nx.CreateDataArrayFilter.execute(
+        data_structure=data_structure,
+        component_count=3,
+        initialization_value_str="3.14159",
+        numeric_type_index=nx.NumericType.float32,
+        output_array_path=nx.DataPath('Small IN100/Scan Data/Eulers'),
+        tuple_dimensions=[[5, 5]],
+    )
+    assert nx.CreateDataArrayFilter.execute(
+        data_structure=data_structure,
+        component_count=1,
+        initialization_value_str="0",
+        numeric_type_index=nx.NumericType.int32,
+        output_array_path=nx.DataPath('Small IN100/Scan Data/Phases'),
+        tuple_dimensions=[[5, 5]],
+    )
+    assert nx.CreateDataArrayFilter.execute(
+        data_structure=data_structure,
+        component_count=1,
+        initialization_value_str="0",
+        numeric_type_index=nx.NumericType.uint32,
+        output_array_path=nx.DataPath('Small IN100/Phase Data/Crystal Structures'),
+        tuple_dimensions=[[5, 5]],
+    )
+    return data_structure
+
+if __name__ == '__main__':
+    data_structure = create_data_structure()
     # Call the function to render the DataStructure heirarchy in a window.
-    show_data_structure_heirarchy(data_structure=data_structure)
+    show_data_structure_heirarchy(data_structure)
