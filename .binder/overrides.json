@@ -1,0 +1,9 @@
+{
+  "@jupyterlab/completer-extension:manager": {
+    "autoCompletion": true,
+    "showDocumentationPanel": true
+  },
+  "@jupyterlab/apputils-extension:themes": {
+    "adaptive-theme": true
+  }
+}
