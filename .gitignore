@@ -30,3 +30,4 @@ CMakeUserPresets.json
 Workspace
 __pycache__/
 Output/
+.mypy_cache/
