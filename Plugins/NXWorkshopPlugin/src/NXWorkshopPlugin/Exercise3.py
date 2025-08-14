@@ -101,7 +101,7 @@ class Exercise3:
     preflight_values.append(nx.IFilter.PreflightValue('Name of value', f'String to be displayed in GUI. Bool is {bool_value}.'))
 
     if bool_value:
-      return nx.IFilter.PreflightResult(output_actions=None, errors=[nx.Error(-8700, f'An error occurred in preflight')], warnings=warnings)
+      return nx.IFilter.PreflightResult(output_actions=None, errors=[nx.Error(-8700, f'An error occurred in preflight')], warnings=warnings, preflight_values=preflight_values)
 
     # X Y Z ordering
     # Different from array dimension ordering!
