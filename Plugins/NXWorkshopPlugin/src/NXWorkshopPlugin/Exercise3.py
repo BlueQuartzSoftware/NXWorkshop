@@ -109,7 +109,8 @@ class Exercise3:
 
     origin: list[float] = [0, 0, 0]
     spacing: list[float] = [1, 1, 1]
-    output_actions.append_action(nx.CreateImageGeometryAction(nx.DataPath('Image Geometry'), dims, origin, spacing, 'Cell Data'))
+    units = nx.IGeometry.LengthUnit.Unspecified
+    output_actions.append_action(nx.CreateImageGeometryAction(nx.DataPath('Image Geometry'), dims, origin, spacing, 'Cell Data', units))
 
     return nx.IFilter.PreflightResult(output_actions=output_actions, errors=None, warnings=warnings, preflight_values=preflight_values)
 
